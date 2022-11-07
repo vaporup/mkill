@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 
-count=$(pgrep -c "$1")
-sounds="sounds"
-
-if [[ -d /usr/share/mkill/sounds ]]; then
-    sounds="/usr/share/mkill/sounds"
-fi
-
 play() {
-    aplay $sounds/$1 2>/dev/null
+
+    if [[ -r "/usr/share/mkill/sounds/$1" ]]; then
+        aplay "/usr/share/mkill/sounds/$1" 2>/dev/null
+        return
+    fi
+
+    if [[ -r "sounds/$1" ]]; then
+        aplay "sounds/$1" 2>/dev/null
+        return
+    fi
 }
+
+count=$(pgrep -c "$1")
 
 pkill "$1"
 exit_code=$?
