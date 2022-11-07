@@ -7,5 +7,5 @@ and plays the famous Unreal Tournament 99 sounds when one or more processes get 
 ### Examples
 
 ```
-mkill nano
+mkill htop
 ```
