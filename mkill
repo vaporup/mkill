@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+count=$(pgrep -c "$1")
+sounds="sounds"
+
+if [[ -d /usr/share/mkill/sounds ]]; then
+    sounds="/usr/share/mkill/sounds"
+fi
+
+play() {
+    aplay $sounds/$1 2>/dev/null
+}
+
+pkill "$1"
+exit_code=$?
+
+if [[ $exit_code -eq 0 ]]; then
+
+    case $count in
+        1) play firstblood.wav   ; exit $exit_code ;;
+        2) play doublekill.wav   ; exit $exit_code ;;
+        3) play triplekill.wav   ; exit $exit_code ;;
+        4) play multikill.wav    ; exit $exit_code ;;
+        5) play ultrakill.wav    ; exit $exit_code ;;
+        6) play monsterkill.wav  ; exit $exit_code ;;
+
+    esac
+
+    if [[ $count -ge 25 ]]; then
+        play godlike.wav         ; exit $exit_code
+    fi
+
+    if [[ $count -ge 20 ]]; then
+        play unstoppable.wav     ; exit $exit_code
+    fi
+
+    if [[ $count -ge 15 ]]; then
+        play dominating.wav      ; exit $exit_code
+    fi
+
+    if [[ $count -ge 10 ]]; then
+        play rampage.wav         ; exit $exit_code
+    fi
+
+    if [[ $count -gt 6 ]]; then
+        play killingspree.wav    ; exit $exit_code
+    fi
+
+fi
+
